@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = getApplication<MainApp>().repository
+    private val newsRepository = getApplication<MainApp>().newsRepository
 
     /// Loading Indicator
     ///
@@ -43,7 +43,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         // Note: We can safely run the Coroutine repository.getArticles() in a
         // viewModelScope launch
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _newsResponse.value = repository.getArticles()
+            _newsResponse.value = newsRepository.getArticles()
             _isLoading.value = false
         }
     }
@@ -56,7 +56,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun getArticlesByCategory(category: String) {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _getArticleByCategory.value = repository.getArticlesByCategory(category)
+            _getArticleByCategory.value = newsRepository.getArticlesByCategory(category)
             _isLoading.value = false
         }
     }
@@ -80,7 +80,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun getArticlesBySource() {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _getArticleBySource.value = repository.getArticlesBySource(sourceName.value)
+            _getArticleBySource.value = newsRepository.getArticlesBySource(sourceName.value)
             _isLoading.value = false
         }
     }
@@ -95,7 +95,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun getSearchArticles(query: String) {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _searchNewsResponse.value = repository.getSearchArticles(query)
+            _searchNewsResponse.value = newsRepository.getSearchArticles(query)
             _isLoading.value = false
         }
     }
