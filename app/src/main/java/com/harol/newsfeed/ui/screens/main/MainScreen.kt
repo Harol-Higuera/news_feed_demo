@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -21,8 +22,8 @@ import com.harol.newsfeed.ui.components.BottomMenuView
 import com.harol.newsfeed.ui.screens.categories.CategoriesScreen
 import com.harol.newsfeed.ui.screens.newsDetails.NewsDetailsScreen
 import com.harol.newsfeed.ui.screens.sources.SourcesScreen
+import com.harol.newsfeed.ui.screens.sources.SourcesViewModel
 import com.harol.newsfeed.ui.screens.topNews.TopNewsScreen
-
 
 @Composable
 fun MainScreen(
@@ -37,7 +38,7 @@ fun MainScreen(
             navController = navController,
             scrollState = scrollState,
             paddingValues = it,
-            viewModel = mainViewModel
+            mainViewModel = mainViewModel
         )
     }
 }
@@ -48,12 +49,12 @@ fun Navigation(
     navController: NavHostController,
     scrollState: ScrollState,
     paddingValues: PaddingValues,
-    viewModel: MainViewModel
+    mainViewModel: MainViewModel
 ) {
-    val loading by viewModel.isLoading.collectAsState()
-    val error by viewModel.isError.collectAsState()
+    val loading by mainViewModel.isLoading.collectAsState()
+    val error by mainViewModel.isError.collectAsState()
     val articles = mutableListOf<Articles>()
-    val topArticles = viewModel.newsResponse.collectAsState().value.articles
+    val topArticles = mainViewModel.newsResponse.collectAsState().value.articles
     articles.addAll(topArticles ?: listOf())
 
     NavHost(
@@ -62,7 +63,7 @@ fun Navigation(
         modifier = Modifier.padding(paddingValues)
     ) {
 
-        val queryState = mutableStateOf(viewModel.query.value)
+        val queryState = mutableStateOf(mainViewModel.query.value)
         val isLoading = mutableStateOf(loading)
         val isError = mutableStateOf(error)
 
@@ -74,7 +75,7 @@ fun Navigation(
                 navController = navController,
                 articles = articles,
                 query = queryState,
-                viewModel = viewModel,
+                viewModel = mainViewModel,
                 isLoading = isLoading,
                 isError = isError
             )
@@ -84,13 +85,13 @@ fun Navigation(
          * Composable: Bottom Menu - Categories
          **/
         composable(BottomMenuScreen.Categories.route) {
-            viewModel.getArticlesByCategory("business")
-            viewModel.onSelectedCategory("business")
+            mainViewModel.getArticlesByCategory("business")
+            mainViewModel.onSelectedCategory("business")
             CategoriesScreen(
-                viewModel = viewModel,
+                viewModel = mainViewModel,
                 onFetchCategory = {
-                    viewModel.onSelectedCategory(it)
-                    viewModel.getArticlesByCategory(it)
+                    mainViewModel.onSelectedCategory(it)
+                    mainViewModel.getArticlesByCategory(it)
                 },
                 isLoading = isLoading,
                 isError = isError
@@ -101,10 +102,10 @@ fun Navigation(
          * Composable: Bottom Menu - Sources
          **/
         composable(BottomMenuScreen.Sources.route) {
+            val sourcesViewModel = viewModel<SourcesViewModel>()
+            sourcesViewModel.getArticlesBySource()
             SourcesScreen(
-                viewModel = viewModel,
-                isLoading = isLoading,
-                isError = isError
+                viewModel = sourcesViewModel,
             )
         }
 
@@ -119,10 +120,10 @@ fun Navigation(
             index?.let {
                 if (queryState.value != "") {
                     articles.clear()
-                    articles.addAll(viewModel.searchNewsResponse.value.articles ?: listOf())
+                    articles.addAll(mainViewModel.searchNewsResponse.value.articles ?: listOf())
                 } else {
                     articles.clear()
-                    articles.addAll(viewModel.newsResponse.value.articles ?: listOf())
+                    articles.addAll(mainViewModel.newsResponse.value.articles ?: listOf())
                 }
                 val article = articles[index]
                 NewsDetailsScreen(article, scrollState, navController)

@@ -25,7 +25,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.harol.newsfeed.R
 import com.harol.newsfeed.models.Articles
-import com.harol.newsfeed.ui.MainViewModel
 import com.harol.newsfeed.ui.components.ErrorView
 import com.harol.newsfeed.ui.components.LoadingView
 
@@ -36,9 +35,7 @@ import com.harol.newsfeed.ui.components.LoadingView
  * */
 @Composable
 fun SourcesScreen(
-    viewModel: MainViewModel,
-    isLoading: MutableState<Boolean>,
-    isError: MutableState<Boolean>
+    viewModel: SourcesViewModel
 ) {
     val items = listOf(
         "TechCrunch" to "techcrunch",
@@ -83,6 +80,9 @@ fun SourcesScreen(
         )
     }) {
 
+        val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
+
         when {
             isLoading.value -> {
                 LoadingView()
@@ -91,9 +91,7 @@ fun SourcesScreen(
                 ErrorView()
             }
             else -> {
-                viewModel.getArticlesBySource()
                 val article = viewModel.getArticleBySource.collectAsState().value
-                //Todo 13: Add the Content composable and pass in articles by source
                 SourceContent(articles = article.articles ?: listOf())
             }
         }

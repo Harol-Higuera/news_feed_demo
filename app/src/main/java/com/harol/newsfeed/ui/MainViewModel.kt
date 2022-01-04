@@ -61,7 +61,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-
     /// :::::: Selected Category ::::::
     ///
     private val _selectedCategory: MutableStateFlow<ArticleCategory?> = MutableStateFlow(null)
@@ -70,21 +69,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun onSelectedCategory(category: String) {
         _selectedCategory.value = category.toArticleCategory()
     }
-
-    /// :::::: Source Name ::::::
-    ///
-    val sourceName = MutableStateFlow("engadget")
-    private val _getArticleBySource = MutableStateFlow(NewsResponse())
-    val getArticleBySource: StateFlow<NewsResponse> get() = _getArticleBySource
-
-    fun getArticlesBySource() {
-        _isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _getArticleBySource.value = newsRepository.getArticlesBySource(sourceName.value)
-            _isLoading.value = false
-        }
-    }
-
 
     /// :::::: Search Feature::::::
     ///
