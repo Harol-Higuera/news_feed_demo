@@ -1,4 +1,4 @@
-package com.harol.newsfeed.ui.screen
+package com.harol.newsfeed.screens.newsDetails
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
@@ -29,7 +29,7 @@ import com.harol.newsfeed.utils.DateUtils.getTimeAgo
 import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
-fun DetailScreen(
+fun NewsDetailsScreen(
     articles: Articles,
     scrollState: ScrollState,
     navController: NavController
@@ -103,7 +103,7 @@ fun InfoWithIcon(icon: ImageVector, info: String) {
 @Preview(showBackground = true)
 @Composable
 fun DetailScreenPreview() {
-    DetailScreen(
+    NewsDetailsScreen(
         Articles(
             author = "Namita Singh",
             title = "Cleo Smith news — live: Kidnap suspect 'in hospital again' as 'hard police grind' credited for breakthrough - The Independent",

@@ -32,7 +32,7 @@ import com.harol.newsfeed.ui.MainViewModel
  * Todo 10 create newsManager variable
  */
 @Composable
-fun SearchBar(query: MutableState<String>, viewModel: MainViewModel) {
+fun SearchView(query: MutableState<String>, viewModel: MainViewModel) {
     val localFocusManager = LocalFocusManager.current
     Card(
         elevation = 6.dp, shape = RoundedCornerShape(4.dp), modifier = Modifier
@@ -91,5 +91,5 @@ fun SearchBar(query: MutableState<String>, viewModel: MainViewModel) {
 @Composable
 fun SearchBarPreview() {
     //Todo 12:pass in NewsManager for preview
-    SearchBar(query = mutableStateOf(""), viewModel())
+    SearchView(query = mutableStateOf(""), viewModel())
 }

@@ -17,11 +17,11 @@ import androidx.navigation.navArgument
 import com.harol.newsfeed.components.BottomMenuView
 import com.harol.newsfeed.data.sealed.BottomMenuScreen
 import com.harol.newsfeed.models.Articles
-import com.harol.newsfeed.screens.topNews.TopNews
+import com.harol.newsfeed.screens.categories.CategoriesScreen
+import com.harol.newsfeed.screens.newsDetails.NewsDetailsScreen
+import com.harol.newsfeed.screens.sources.SourcesScreen
+import com.harol.newsfeed.screens.topNews.TopNewsScreen
 import com.harol.newsfeed.ui.MainViewModel
-import com.harol.newsfeed.ui.screen.Categories
-import com.harol.newsfeed.ui.screen.DetailScreen
-import com.harol.newsfeed.ui.screen.Sources
 
 
 @Composable
@@ -70,7 +70,7 @@ fun Navigation(
          * Composable: Bottom Menu - Top News
          **/
         composable(BottomMenuScreen.TopNews.route) {
-            TopNews(
+            TopNewsScreen(
                 navController = navController,
                 articles = articles,
                 query = queryState,
@@ -86,7 +86,7 @@ fun Navigation(
         composable(BottomMenuScreen.Categories.route) {
             viewModel.getArticlesByCategory("business")
             viewModel.onSelectedCategory("business")
-            Categories(
+            CategoriesScreen(
                 viewModel = viewModel,
                 onFetchCategory = {
                     viewModel.onSelectedCategory(it)
@@ -101,7 +101,7 @@ fun Navigation(
          * Composable: Bottom Menu - Sources
          **/
         composable(BottomMenuScreen.Sources.route) {
-            Sources(
+            SourcesScreen(
                 viewModel = viewModel,
                 isLoading = isLoading,
                 isError = isError
@@ -125,7 +125,7 @@ fun Navigation(
                     articles.addAll(viewModel.newsResponse.value.articles ?: listOf())
                 }
                 val article = articles[index]
-                DetailScreen(article, scrollState, navController)
+                NewsDetailsScreen(article, scrollState, navController)
             }
         }
     }

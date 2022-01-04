@@ -1,4 +1,4 @@
-package com.harol.newsfeed.ui.screen
+package com.harol.newsfeed.screens.sources
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,7 +35,7 @@ import com.harol.newsfeed.ui.MainViewModel
  * Then add a scaffold.
  * */
 @Composable
-fun Sources(
+fun SourcesScreen(
     viewModel: MainViewModel,
     isLoading: MutableState<Boolean>,
     isError: MutableState<Boolean>

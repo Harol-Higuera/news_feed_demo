@@ -1,4 +1,4 @@
-package com.harol.newsfeed.ui.screen
+package com.harol.newsfeed.screens.categories
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -28,7 +28,7 @@ import com.harol.newsfeed.utils.DateUtils.getTimeAgo
 
 
 @Composable
-fun Categories(
+fun CategoriesScreen(
     onFetchCategory: (String) -> Unit,
     viewModel: MainViewModel,
     isLoading: MutableState<Boolean>,
