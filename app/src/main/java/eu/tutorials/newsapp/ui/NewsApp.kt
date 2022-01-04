@@ -14,7 +14,6 @@ import androidx.navigation.compose.rememberNavController
 import eu.tutorials.newsapp.BottomMenuScreen
 import eu.tutorials.newsapp.components.BottomMenu
 import eu.tutorials.newsapp.models.Articles
-import eu.tutorials.newsapp.network.Api
 import eu.tutorials.newsapp.ui.screen.Categories
 import eu.tutorials.newsapp.ui.screen.DetailScreen
 import eu.tutorials.newsapp.ui.screen.Sources
@@ -50,7 +49,6 @@ fun MainScreen(
 fun Navigation(
     navController: NavHostController,
     scrollState: ScrollState,
-    newsManager: NewsManager = NewsManager(Api.retrofitService),
     paddingValues: PaddingValues,
     viewModel: MainViewModel
 ) {

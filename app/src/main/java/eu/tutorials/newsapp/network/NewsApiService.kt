@@ -4,8 +4,7 @@ import eu.tutorials.newsapp.models.NewsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface NewsService {
-
+interface NewsApiService {
 
     @GET("top-headlines")
     suspend fun getTopArticles(
