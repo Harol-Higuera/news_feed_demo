@@ -1,4 +1,4 @@
-package com.harol.newsfeed.screens.newsDetails
+package com.harol.newsfeed.ui.screens.newsDetails
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*

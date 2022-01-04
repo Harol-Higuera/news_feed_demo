@@ -1,4 +1,4 @@
-package com.harol.newsfeed.screens.main
+package com.harol.newsfeed.ui.screens.main
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,14 +14,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.harol.newsfeed.components.BottomMenuView
 import com.harol.newsfeed.data.sealed.BottomMenuScreen
 import com.harol.newsfeed.models.Articles
-import com.harol.newsfeed.screens.categories.CategoriesScreen
-import com.harol.newsfeed.screens.newsDetails.NewsDetailsScreen
-import com.harol.newsfeed.screens.sources.SourcesScreen
-import com.harol.newsfeed.screens.topNews.TopNewsScreen
 import com.harol.newsfeed.ui.MainViewModel
+import com.harol.newsfeed.ui.components.BottomMenuView
+import com.harol.newsfeed.ui.screens.categories.CategoriesScreen
+import com.harol.newsfeed.ui.screens.newsDetails.NewsDetailsScreen
+import com.harol.newsfeed.ui.screens.sources.SourcesScreen
+import com.harol.newsfeed.ui.screens.topNews.TopNewsScreen
 
 
 @Composable

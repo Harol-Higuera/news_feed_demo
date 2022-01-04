@@ -1,4 +1,4 @@
-package com.harol.newsfeed.components
+package com.harol.newsfeed.ui.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxWidth

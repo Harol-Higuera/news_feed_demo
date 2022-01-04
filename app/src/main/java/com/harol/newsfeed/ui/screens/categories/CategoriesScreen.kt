@@ -1,4 +1,4 @@
-package com.harol.newsfeed.screens.categories
+package com.harol.newsfeed.ui.screens.categories
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -19,10 +19,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.harol.newsfeed.R
-import com.harol.newsfeed.components.LoadingView
 import com.harol.newsfeed.data.enums.allArticleCategories
 import com.harol.newsfeed.models.Articles
 import com.harol.newsfeed.ui.MainViewModel
+import com.harol.newsfeed.ui.components.LoadingView
 import com.harol.newsfeed.utils.DateUtils
 import com.harol.newsfeed.utils.DateUtils.getTimeAgo
 

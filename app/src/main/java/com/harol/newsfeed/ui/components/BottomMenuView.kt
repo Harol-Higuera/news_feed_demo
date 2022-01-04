@@ -1,4 +1,4 @@
-package com.harol.newsfeed.components
+package com.harol.newsfeed.ui.components
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
