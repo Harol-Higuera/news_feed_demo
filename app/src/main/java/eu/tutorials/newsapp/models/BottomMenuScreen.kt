@@ -1,4 +1,4 @@
-package eu.tutorials.newsapp.model
+package eu.tutorials.newsapp.models
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Category

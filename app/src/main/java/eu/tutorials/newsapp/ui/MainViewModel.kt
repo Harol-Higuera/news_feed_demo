@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import eu.tutorials.newsapp.MainApp
 import eu.tutorials.newsapp.data.enums.ArticleCategory
 import eu.tutorials.newsapp.data.enums.toArticleCategory
-import eu.tutorials.newsapp.model.NewsResponse
+import eu.tutorials.newsapp.models.NewsResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

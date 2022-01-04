@@ -26,12 +26,12 @@ import com.skydoves.landscapist.coil.CoilImage
 import eu.tutorials.newsapp.MockData
 import eu.tutorials.newsapp.MockData.getTimeAgo
 import eu.tutorials.newsapp.R
-import eu.tutorials.newsapp.model.Articles
+import eu.tutorials.newsapp.models.Articles
 
 @Composable
-fun DetailScreen(articles: Articles, scrollState: ScrollState,navController: NavController) {
+fun DetailScreen(articles: Articles, scrollState: ScrollState, navController: NavController) {
     Scaffold(topBar = {
-        DetailTopAppBar(onBackPressed = {navController.popBackStack()})
+        DetailTopAppBar(onBackPressed = { navController.popBackStack() })
     }) {
         Column(
             modifier = Modifier
@@ -44,19 +44,25 @@ fun DetailScreen(articles: Articles, scrollState: ScrollState,navController: Nav
                 imageModel = articles.urlToImage,
                 // Crop, Fit, Inside, FillHeight, FillWidth, None
                 contentScale = ContentScale.Crop,
-            // shows a placeholder ImageBitmap when loading.
-            placeHolder = ImageBitmap.imageResource(R.drawable.breaking_news)
+                // shows a placeholder ImageBitmap when loading.
+                placeHolder = ImageBitmap.imageResource(R.drawable.breaking_news)
             )
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp), horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                    InfoWithIcon(Icons.Default.Edit, info = articles.author ?: "Not Available")
-                InfoWithIcon(icon = Icons.Default.DateRange, info = MockData.stringToDate(articles.publishedAt!!).getTimeAgo())
+                InfoWithIcon(Icons.Default.Edit, info = articles.author ?: "Not Available")
+                InfoWithIcon(
+                    icon = Icons.Default.DateRange,
+                    info = MockData.stringToDate(articles.publishedAt!!).getTimeAgo()
+                )
             }
-            Text(text = articles.title ?:"Not Available", fontWeight = FontWeight.Bold)
-            Text(text = articles.description ?: "Not Available", modifier = Modifier.padding(top = 16.dp))
+            Text(text = articles.title ?: "Not Available", fontWeight = FontWeight.Bold)
+            Text(
+                text = articles.description ?: "Not Available",
+                modifier = Modifier.padding(top = 16.dp)
+            )
         }
     }
 }

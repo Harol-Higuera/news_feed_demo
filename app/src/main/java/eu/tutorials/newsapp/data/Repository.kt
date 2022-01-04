@@ -2,7 +2,7 @@ package eu.tutorials.newsapp.data
 
 import eu.tutorials.newsapp.ui.NewsManager
 
-class Repository(val manager: NewsManager) {
+class Repository(private val manager: NewsManager) {
 
     suspend fun getArticles() = manager.getArticles("us")
 

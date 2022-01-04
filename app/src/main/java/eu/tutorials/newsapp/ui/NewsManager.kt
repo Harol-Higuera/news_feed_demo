@@ -1,6 +1,6 @@
 package eu.tutorials.newsapp.ui
 
-import eu.tutorials.newsapp.model.NewsResponse
+import eu.tutorials.newsapp.models.NewsResponse
 import eu.tutorials.newsapp.network.NewsService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

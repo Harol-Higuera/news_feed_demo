@@ -23,7 +23,7 @@ import eu.tutorials.newsapp.MockData.getTimeAgo
 import eu.tutorials.newsapp.R
 import eu.tutorials.newsapp.components.LoadingUI
 import eu.tutorials.newsapp.data.enums.allArticleCategories
-import eu.tutorials.newsapp.model.Articles
+import eu.tutorials.newsapp.models.Articles
 import eu.tutorials.newsapp.ui.MainViewModel
 
 @Composable

@@ -13,7 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import eu.tutorials.newsapp.BottomMenuScreen
 import eu.tutorials.newsapp.components.BottomMenu
-import eu.tutorials.newsapp.model.Articles
+import eu.tutorials.newsapp.models.Articles
 import eu.tutorials.newsapp.network.Api
 import eu.tutorials.newsapp.ui.screen.Categories
 import eu.tutorials.newsapp.ui.screen.DetailScreen

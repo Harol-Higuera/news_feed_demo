@@ -1,6 +1,6 @@
 package eu.tutorials.newsapp.network
 
-import eu.tutorials.newsapp.model.NewsResponse
+import eu.tutorials.newsapp.models.NewsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
