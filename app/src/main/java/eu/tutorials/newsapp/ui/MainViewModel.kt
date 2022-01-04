@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import eu.tutorials.newsapp.MainApp
-import eu.tutorials.newsapp.data.ArticleCategory
-import eu.tutorials.newsapp.data.toArticleCategory
+import eu.tutorials.newsapp.data.enums.ArticleCategory
+import eu.tutorials.newsapp.data.enums.toArticleCategory
 import eu.tutorials.newsapp.model.NewsResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers

@@ -1,6 +1,7 @@
-package eu.tutorials.newsapp.data
+package eu.tutorials.newsapp.data.enums
 
-import eu.tutorials.newsapp.data.ArticleCategory.*
+import eu.tutorials.newsapp.data.enums.ArticleCategory.*
+
 
 enum class ArticleCategory(val category: String) {
     BUSINESS("business"),
@@ -13,7 +14,15 @@ enum class ArticleCategory(val category: String) {
 }
 
 fun allArticleCategories(): List<ArticleCategory> {
-    return listOf(BUSINESS, ENTERTAINMENT, GENERAL, HEALTH, SCIENCE, SPORTS, TECHNOLOGY)
+    return listOf(
+        BUSINESS,
+        ENTERTAINMENT,
+        GENERAL,
+        HEALTH,
+        SCIENCE,
+        SPORTS,
+        TECHNOLOGY
+    )
 }
 
 fun String.toArticleCategory(): ArticleCategory? {
