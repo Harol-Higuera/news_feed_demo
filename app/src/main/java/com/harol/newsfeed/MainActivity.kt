@@ -1,6 +1,5 @@
 package com.harol.newsfeed
 
-import MainScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.harol.newsfeed.screens.main.MainScreen
 import com.harol.newsfeed.ui.MainViewModel
 import com.harol.newsfeed.ui.theme.NewsAppTheme
 
