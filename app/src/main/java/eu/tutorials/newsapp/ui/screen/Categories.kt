@@ -22,7 +22,7 @@ import eu.tutorials.newsapp.MockData
 import eu.tutorials.newsapp.MockData.getTimeAgo
 import eu.tutorials.newsapp.R
 import eu.tutorials.newsapp.components.LoadingUI
-import eu.tutorials.newsapp.data.getAllArticleCategory
+import eu.tutorials.newsapp.data.allArticleCategories
 import eu.tutorials.newsapp.model.Articles
 import eu.tutorials.newsapp.ui.MainViewModel
 
@@ -33,7 +33,7 @@ fun Categories(
     isLoading: MutableState<Boolean>,
     isError: MutableState<Boolean>
 ) {
-    val tabsItems = getAllArticleCategory()
+    val tabsItems = allArticleCategories()
     Column {
         when {
             isLoading.value -> {

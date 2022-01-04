@@ -12,11 +12,11 @@ enum class ArticleCategory(val category: String) {
     TECHNOLOGY("technology")
 }
 
-fun getAllArticleCategory(): List<ArticleCategory> {
+fun allArticleCategories(): List<ArticleCategory> {
     return listOf(BUSINESS, ENTERTAINMENT, GENERAL, HEALTH, SCIENCE, SPORTS, TECHNOLOGY)
 }
 
-fun getArticleCategory(category: String): ArticleCategory? {
+fun String.toArticleCategory(): ArticleCategory? {
     val map = ArticleCategory.values().associateBy(ArticleCategory::category)
-    return map[category]
+    return map[this]
 }

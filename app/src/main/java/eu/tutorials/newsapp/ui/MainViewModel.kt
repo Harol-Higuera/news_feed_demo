@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import eu.tutorials.newsapp.MainApp
 import eu.tutorials.newsapp.data.ArticleCategory
-import eu.tutorials.newsapp.data.getArticleCategory
+import eu.tutorials.newsapp.data.toArticleCategory
 import eu.tutorials.newsapp.model.NewsResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -68,9 +68,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val selectedCategory: StateFlow<ArticleCategory?> get() = _selectedCategory
 
     fun onSelectedCategory(category: String) {
-        // Get ArticleCategory from String
-        val newCategory = getArticleCategory(category)
-        _selectedCategory.value = newCategory
+        _selectedCategory.value = category.toArticleCategory()
     }
 
     /// :::::: Source Name ::::::

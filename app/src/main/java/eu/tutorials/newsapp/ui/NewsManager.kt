@@ -5,7 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import eu.tutorials.newsapp.data.ArticleCategory
-import eu.tutorials.newsapp.data.getArticleCategory
+import eu.tutorials.newsapp.data.toArticleCategory
 import eu.tutorials.newsapp.model.NewsResponse
 import eu.tutorials.newsapp.network.NewsService
 import kotlinx.coroutines.Dispatchers
@@ -71,8 +71,7 @@ class NewsManager(private val service: NewsService) {
 
 
     fun onSelectedCategoryChanged(category: String) {
-        val newCategory = getArticleCategory(category = category)
-        selectedCategory.value = newCategory
+        selectedCategory.value = category.toArticleCategory()
     }
 
     fun onQueryChanged(query: String) {
