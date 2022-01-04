@@ -5,7 +5,7 @@ import android.os.Build
 import java.util.*
 
 object DateUtils {
-    fun stringToDate(publishedAt: String): Date {
+    fun stringToDate(publishedAt: String): Date? {
         val date =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssxx", Locale.ENGLISH).parse(publishedAt)

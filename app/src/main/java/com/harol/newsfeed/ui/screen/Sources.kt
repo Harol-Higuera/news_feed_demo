@@ -24,8 +24,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.harol.newsfeed.R
-import com.harol.newsfeed.components.ErrorUI
-import com.harol.newsfeed.components.LoadingUI
+import com.harol.newsfeed.components.ErrorView
+import com.harol.newsfeed.components.LoadingView
 import com.harol.newsfeed.models.Articles
 import com.harol.newsfeed.ui.MainViewModel
 
@@ -85,10 +85,10 @@ fun Sources(
 
         when {
             isLoading.value -> {
-                LoadingUI()
+                LoadingView()
             }
             isError.value -> {
-                ErrorUI()
+                ErrorView()
             }
             else -> {
                 viewModel.getArticlesBySource()

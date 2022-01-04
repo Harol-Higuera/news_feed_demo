@@ -19,7 +19,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.harol.newsfeed.R
-import com.harol.newsfeed.components.LoadingUI
+import com.harol.newsfeed.components.LoadingView
 import com.harol.newsfeed.data.enums.allArticleCategories
 import com.harol.newsfeed.models.Articles
 import com.harol.newsfeed.ui.MainViewModel
@@ -38,7 +38,7 @@ fun Categories(
     Column {
         when {
             isLoading.value -> {
-                LoadingUI()
+                LoadingView()
             }
             isError.value -> {
 
