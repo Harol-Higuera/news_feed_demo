@@ -12,7 +12,7 @@ class NewsManager(private val newsApiService: NewsApiService) {
     suspend fun getArticles(country: String): NewsResponse = withContext(Dispatchers.IO) {
         newsApiService.getTopArticles(
             country,
-            "d2691289ff474bb9850b71fa026ce470"
+            "715861e4b4874400a164e9d7bca63c0c"
         )
     }
 
@@ -20,7 +20,7 @@ class NewsManager(private val newsApiService: NewsApiService) {
         withContext(Dispatchers.IO) {
             newsApiService.searchArticlesBySource(
                 source = source,
-                "d2691289ff474bb9850b71fa026ce470"
+                "715861e4b4874400a164e9d7bca63c0c"
             )
         }
 
@@ -28,7 +28,7 @@ class NewsManager(private val newsApiService: NewsApiService) {
         withContext(Dispatchers.IO) {
             newsApiService.searchArticles(
                 query,
-                "d2691289ff474bb9850b71fa026ce470"
+                "715861e4b4874400a164e9d7bca63c0c"
             )
         }
 
@@ -36,7 +36,7 @@ class NewsManager(private val newsApiService: NewsApiService) {
         withContext(Dispatchers.IO) {
             newsApiService.getCategories(
                 category,
-                "d2691289ff474bb9850b71fa026ce470"
+                "715861e4b4874400a164e9d7bca63c0c"
             )
         }
 }
