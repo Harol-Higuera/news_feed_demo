@@ -10,26 +10,28 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.harol.newsfeed.BottomMenuScreen
 import com.harol.newsfeed.R
+import com.harol.newsfeed.data.sealed.BottomMenuScreen
 
 
 @Composable
-fun BottomMenu(navController:NavController) {
+fun BottomMenuView(navController: NavController) {
     val menuItems = listOf(
         BottomMenuScreen.TopNews,
         BottomMenuScreen.Categories,
         BottomMenuScreen.Sources
     )
-    //Todo 7: Add th BottomNavigation, loop through each item and set to bottom navigation item
-    BottomNavigation(contentColor = colorResource(id = R.color.white))
-    {
-        //Todo 14: get the destination route via the nav back stack entry and set icon color when an item is selected
+    BottomNavigation(
+        contentColor = colorResource(id = R.color.white)
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
+
         menuItems.forEach {
             BottomNavigationItem(
-                label = { Text(text = it.title) },
+                label = {
+                    Text(text = it.title)
+                },
                 alwaysShowLabel = true,
                 selectedContentColor = Color.White,
                 unselectedContentColor = Color.Gray,
@@ -51,8 +53,7 @@ fun BottomMenu(navController:NavController) {
                         contentDescription = it.title
                     )
                 },
-                )
-
+            )
         }
     }
 }

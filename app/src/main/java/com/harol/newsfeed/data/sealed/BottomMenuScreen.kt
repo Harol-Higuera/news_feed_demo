@@ -1,4 +1,4 @@
-package com.harol.newsfeed
+package com.harol.newsfeed.data.sealed
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Category

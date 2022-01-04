@@ -29,7 +29,11 @@ import com.harol.newsfeed.utils.DateUtils.getTimeAgo
 import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
-fun DetailScreen(articles: Articles, scrollState: ScrollState, navController: NavController) {
+fun DetailScreen(
+    articles: Articles,
+    scrollState: ScrollState,
+    navController: NavController
+) {
     Scaffold(topBar = {
         DetailTopAppBar(onBackPressed = { navController.popBackStack() })
     }) {

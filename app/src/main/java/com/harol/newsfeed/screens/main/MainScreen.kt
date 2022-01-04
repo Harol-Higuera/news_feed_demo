@@ -1,30 +1,26 @@
-package com.harol.newsfeed.ui
-
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.navigation.*
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.harol.newsfeed.BottomMenuScreen
-import com.harol.newsfeed.components.BottomMenu
+import androidx.navigation.navArgument
+import com.harol.newsfeed.components.BottomMenuView
+import com.harol.newsfeed.data.sealed.BottomMenuScreen
 import com.harol.newsfeed.models.Articles
+import com.harol.newsfeed.ui.MainViewModel
 import com.harol.newsfeed.ui.screen.Categories
 import com.harol.newsfeed.ui.screen.DetailScreen
 import com.harol.newsfeed.ui.screen.Sources
 import com.harol.newsfeed.ui.screen.TopNews
 
-@Composable
-fun NewsApp(viewModel: MainViewModel) {
-    val scrollState = rememberScrollState()
-    val navController = rememberNavController()
-    MainScreen(navController = navController, scrollState, viewModel)
-}
 
 @Composable
 fun MainScreen(
@@ -33,7 +29,7 @@ fun MainScreen(
     mainViewModel: MainViewModel
 ) {
     Scaffold(bottomBar = {
-        BottomMenu(navController = navController)
+        BottomMenuView(navController = navController)
     }) {
         Navigation(
             navController = navController,
@@ -57,6 +53,7 @@ fun Navigation(
     val articles = mutableListOf<Articles>()
     val topArticles = viewModel.newsResponse.collectAsState().value.articles
     articles.addAll(topArticles ?: listOf())
+
     NavHost(
         navController = navController,
         startDestination = BottomMenuScreen.TopNews.route,
@@ -67,22 +64,57 @@ fun Navigation(
         val isLoading = mutableStateOf(loading)
         val isError = mutableStateOf(error)
 
-        bottomNavigation(
-            navController = navController,
-            articles = articles,
-            query = queryState,
-            viewModel = viewModel,
-            isLoading = isLoading,
-            isError = isError
-        )
+        /**
+         * Composable: Bottom Menu - Top News
+         **/
+        composable(BottomMenuScreen.TopNews.route) {
+            TopNews(
+                navController = navController,
+                articles = articles,
+                query = queryState,
+                viewModel = viewModel,
+                isLoading = isLoading,
+                isError = isError
+            )
+        }
 
+        /**
+         * Composable: Bottom Menu - Categories
+         **/
+        composable(BottomMenuScreen.Categories.route) {
+            viewModel.getArticlesByCategory("business")
+            viewModel.onSelectedCategory("business")
+            Categories(
+                viewModel = viewModel,
+                onFetchCategory = {
+                    viewModel.onSelectedCategory(it)
+                    viewModel.getArticlesByCategory(it)
+                },
+                isLoading = isLoading,
+                isError = isError
+            )
+        }
+
+        /**
+         * Composable: Bottom Menu - Sources
+         **/
+        composable(BottomMenuScreen.Sources.route) {
+            Sources(
+                viewModel = viewModel,
+                isLoading = isLoading,
+                isError = isError
+            )
+        }
+
+        /**
+         * Composable: Bottom Menu - News Details
+         **/
         composable("Detail/{index}",
             arguments = listOf(
                 navArgument("index") { type = NavType.IntType }
             )) { navBackStackEntry ->
             val index = navBackStackEntry.arguments?.getInt("index")
             index?.let {
-                //Todo 16 update the news detail article to include the search response
                 if (queryState.value != "") {
                     articles.clear()
                     articles.addAll(viewModel.searchNewsResponse.value.articles ?: listOf())
@@ -94,45 +126,5 @@ fun Navigation(
                 DetailScreen(article, scrollState, navController)
             }
         }
-    }
-}
-
-fun NavGraphBuilder.bottomNavigation(
-    navController: NavController,
-    articles: List<Articles>,
-    query: MutableState<String>,
-    viewModel: MainViewModel,
-    isLoading: MutableState<Boolean>,
-    isError: MutableState<Boolean>
-) {
-    composable(BottomMenuScreen.TopNews.route) {
-        TopNews(
-            navController = navController,
-            articles = articles,
-            query = query,
-            viewModel = viewModel,
-            isLoading = isLoading,
-            isError = isError
-        )
-    }
-    composable(BottomMenuScreen.Categories.route) {
-        viewModel.getArticlesByCategory("business")
-        viewModel.onSelectedCategory("business")
-        Categories(
-            viewModel = viewModel,
-            onFetchCategory = {
-                viewModel.onSelectedCategory(it)
-                viewModel.getArticlesByCategory(it)
-            },
-            isLoading = isLoading,
-            isError = isError
-        )
-    }
-    composable(BottomMenuScreen.Sources.route) {
-        Sources(
-            viewModel = viewModel,
-            isLoading = isLoading,
-            isError = isError
-        )
     }
 }
