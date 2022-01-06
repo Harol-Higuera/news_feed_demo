@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.harol.newsfeed.NewsFeedApp
 import com.harol.newsfeed.data.enums.ArticleCategory
-import com.harol.newsfeed.data.enums.toArticleCategory
 import com.harol.newsfeed.models.NewsResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -44,15 +43,16 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
     /// Public Functions
     ///
 
-    fun getArticlesByCategory(category: String) {
+    fun getArticlesByCategory(category: ArticleCategory) {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _getArticleByCategory.value = newsRepository.getArticlesByCategory(category)
+            _getArticleByCategory.value =
+                newsRepository.getArticlesByCategory(category.categoryName)
             _isLoading.value = false
         }
     }
 
-    fun onSelectedCategory(category: String) {
-        _selectedCategory.value = category.toArticleCategory()
+    fun onSelectedCategory(category: ArticleCategory) {
+        _selectedCategory.value = category
     }
 }

@@ -18,6 +18,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.harol.newsfeed.R
+import com.harol.newsfeed.data.enums.ArticleCategory
 import com.harol.newsfeed.data.enums.allArticleCategories
 import com.harol.newsfeed.models.Articles
 import com.harol.newsfeed.ui.components.LoadingView
@@ -27,7 +28,7 @@ import com.harol.newsfeed.utils.DateUtils.getTimeAgo
 
 @Composable
 fun CategoriesScreen(
-    onFetchCategory: (String) -> Unit,
+    onFetchCategory: (ArticleCategory) -> Unit,
     viewModel: CategoriesViewModel,
 ) {
     val tabsItems = allArticleCategories()
@@ -48,7 +49,7 @@ fun CategoriesScreen(
                     items(tabsItems.size) {
                         val category = tabsItems[it]
                         CategoryTab(
-                            category = category.category,
+                            category = category,
                             onFetchCategory = onFetchCategory,
                             isSelected = viewModel.selectedCategory.collectAsState().value == category
                         )
@@ -67,9 +68,9 @@ fun CategoriesScreen(
 
 @Composable
 fun CategoryTab(
-    category: String,
+    category: ArticleCategory,
     isSelected: Boolean = false,
-    onFetchCategory: (String) -> Unit
+    onFetchCategory: (ArticleCategory) -> Unit
 ) {
     val background =
         if (isSelected) colorResource(id = R.color.purple_200) else colorResource(id = R.color.purple_700)
@@ -83,7 +84,7 @@ fun CategoryTab(
         color = background
     ) {
         Text(
-            text = category,
+            text = category.categoryName,
             style = MaterialTheme.typography.body2,
             color = Color.White,
             modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)

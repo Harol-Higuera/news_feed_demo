@@ -3,7 +3,7 @@ package com.harol.newsfeed.data.enums
 import com.harol.newsfeed.data.enums.ArticleCategory.*
 
 
-enum class ArticleCategory(val category: String) {
+enum class ArticleCategory(val categoryName: String) {
     BUSINESS("business"),
     ENTERTAINMENT("entertainment"),
     GENERAL("general"),
@@ -26,6 +26,6 @@ fun allArticleCategories(): List<ArticleCategory> {
 }
 
 fun String.toArticleCategory(): ArticleCategory? {
-    val map = ArticleCategory.values().associateBy(ArticleCategory::category)
+    val map = ArticleCategory.values().associateBy(ArticleCategory::categoryName)
     return map[this]
 }
