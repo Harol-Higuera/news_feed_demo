@@ -17,7 +17,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.harol.newsfeed.data.sealed.BottomMenuScreen
 import com.harol.newsfeed.models.Articles
-import com.harol.newsfeed.ui.MainViewModel
 import com.harol.newsfeed.ui.components.BottomMenuView
 import com.harol.newsfeed.ui.screens.categories.CategoriesScreen
 import com.harol.newsfeed.ui.screens.categories.CategoriesViewModel

@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.harol.newsfeed.ui.MainViewModel
+import com.harol.newsfeed.ui.screens.main.MainViewModel
 
 /**Todo 1: create SearchBar composable with a Card and TextField, customizing
  * its keyboard to show the Search icon as the action button
