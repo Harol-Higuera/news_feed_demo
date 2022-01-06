@@ -21,7 +21,6 @@ import com.harol.newsfeed.models.Articles
 import com.harol.newsfeed.ui.components.ErrorView
 import com.harol.newsfeed.ui.components.LoadingView
 import com.harol.newsfeed.ui.components.SearchView
-import com.harol.newsfeed.ui.screens.main.MainViewModel
 import com.harol.newsfeed.utils.DateUtils
 import com.harol.newsfeed.utils.DateUtils.getTimeAgo
 import com.skydoves.landscapist.coil.CoilImage
@@ -29,7 +28,7 @@ import com.skydoves.landscapist.coil.CoilImage
 @Composable
 fun TopNewsScreen(
     navController: NavController,
-    viewModel: MainViewModel,
+    viewModel: TopNewsViewModel,
 ) {
 
     Column(

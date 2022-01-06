@@ -11,17 +11,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.harol.newsfeed.ui.screens.main.MainViewModel
 import com.harol.newsfeed.ui.screens.main.MainScreen
+import com.harol.newsfeed.ui.screens.topNews.TopNewsViewModel
 import com.harol.newsfeed.ui.theme.NewsAppTheme
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel by viewModels<MainViewModel>()
+    private val topNewsViewModel by viewModels<TopNewsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getTopNews()
+        topNewsViewModel.getTopNews()
         setContent {
             NewsAppTheme {
                 Surface(color = MaterialTheme.colors.background) {
@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     MainScreen(
                         navController = navController,
                         scrollState = scrollState,
-                        mainViewModel = viewModel
+                        topNewsViewModel = topNewsViewModel
                     )
                 }
             }
@@ -47,7 +47,7 @@ fun DefaultPreview() {
         MainScreen(
             navController = navController,
             scrollState = scrollState,
-            mainViewModel = viewModel()
+            topNewsViewModel = viewModel()
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.harol.newsfeed.ui.screens.main
+package com.harol.newsfeed.ui.screens.topNews
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class TopNewsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val newsRepository = getApplication<NewsFeedApp>().newsRepository
 

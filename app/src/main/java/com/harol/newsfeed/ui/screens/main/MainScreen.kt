@@ -20,13 +20,14 @@ import com.harol.newsfeed.ui.screens.categories.CategoriesViewModel
 import com.harol.newsfeed.ui.screens.newsDetails.NewsDetailsScreen
 import com.harol.newsfeed.ui.screens.sources.SourcesScreen
 import com.harol.newsfeed.ui.screens.sources.SourcesViewModel
+import com.harol.newsfeed.ui.screens.topNews.TopNewsViewModel
 import com.harol.newsfeed.ui.screens.topNews.TopNewsScreen
 
 @Composable
 fun MainScreen(
     navController: NavHostController,
     scrollState: ScrollState,
-    mainViewModel: MainViewModel
+    topNewsViewModel: TopNewsViewModel
 ) {
     Scaffold(bottomBar = {
         BottomMenuView(navController = navController)
@@ -35,7 +36,7 @@ fun MainScreen(
             navController = navController,
             scrollState = scrollState,
             paddingValues = it,
-            mainViewModel = mainViewModel
+            topNewsViewModel = topNewsViewModel
         )
     }
 }
@@ -46,7 +47,7 @@ fun Navigation(
     navController: NavHostController,
     scrollState: ScrollState,
     paddingValues: PaddingValues,
-    mainViewModel: MainViewModel
+    topNewsViewModel: TopNewsViewModel
 ) {
 
 
@@ -61,7 +62,7 @@ fun Navigation(
         composable(BottomMenuScreen.TopNews.route) {
             TopNewsScreen(
                 navController = navController,
-                viewModel = mainViewModel,
+                viewModel = topNewsViewModel,
             )
         }
 
@@ -96,7 +97,7 @@ fun Navigation(
             )) { navBackStackEntry ->
             val index = navBackStackEntry.arguments?.getInt("index")
             index?.let { nonNullIndex ->
-                val currentNews = mainViewModel.newsResponse.collectAsState().value
+                val currentNews = topNewsViewModel.newsResponse.collectAsState().value
                 currentNews.articles?.let { articles ->
                     if (articles.isNotEmpty()) {
                         NewsDetailsScreen(articles[nonNullIndex], scrollState, navController)
