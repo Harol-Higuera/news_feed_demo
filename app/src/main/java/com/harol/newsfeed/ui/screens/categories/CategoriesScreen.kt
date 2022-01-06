@@ -21,6 +21,7 @@ import com.harol.newsfeed.R
 import com.harol.newsfeed.data.enums.ArticleCategory
 import com.harol.newsfeed.data.enums.allArticleCategories
 import com.harol.newsfeed.models.Articles
+import com.harol.newsfeed.ui.components.ErrorView
 import com.harol.newsfeed.ui.components.LoadingView
 import com.harol.newsfeed.utils.DateUtils
 import com.harol.newsfeed.utils.DateUtils.getTimeAgo
@@ -34,35 +35,28 @@ fun CategoriesScreen(
 
     val isLoading = viewModel.isLoading.collectAsState()
     val isError = viewModel.isError.collectAsState()
+    val articles = viewModel.newsResponse.collectAsState().value.articles ?: listOf()
 
     Column {
-        when {
-            isLoading.value -> {
-                LoadingView()
-            }
-            isError.value -> {
 
-            }
-            else -> {
-                LazyRow {
-                    items(tabsItems.size) {
-                        val category = tabsItems[it]
-                        CategoryTab(
-                            category = category,
-                            onFetchCategory = { selectedCategory ->
-                                viewModel.getNewsByCategory(selectedCategory)
-                            },
-                            isSelected = viewModel.selectedCategory.collectAsState().value == category,
-                        )
-                    }
+        if (articles.isNotEmpty()) {
+            LazyRow {
+                items(tabsItems.size) {
+                    val category = tabsItems[it]
+                    CategoryTab(
+                        category = category,
+                        onFetchCategory = { selectedCategory ->
+                            viewModel.getNewsByCategory(selectedCategory)
+                        },
+                        isSelected = viewModel.selectedCategory.collectAsState().value == category,
+                    )
                 }
             }
         }
-
-        PagerContent(
-            articles = viewModel.newsResponse.collectAsState().value.articles ?: listOf(
-                Articles()
-            ), modifier = Modifier.padding(8.dp)
+        Content(
+            articles = articles,
+            isLoading = isLoading.value,
+            isError = isError.value
         )
     }
 }
@@ -88,34 +82,63 @@ fun CategoryTab(
             text = category.categoryName,
             style = MaterialTheme.typography.body2,
             color = Color.White,
-            modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
+            modifier = Modifier.padding(all = 8.dp)
         )
-
     }
 }
 
 @Composable
-fun PagerContent(articles: List<Articles>, modifier: Modifier = Modifier) {
+fun Content(
+    articles: List<Articles>,
+    isLoading: Boolean,
+    isError: Boolean,
+) {
+    Box {
+        ArticleItems(
+            articles = articles,
+            modifier = Modifier.padding(8.dp)
+        )
+        when {
+            isLoading -> {
+                LoadingView()
+            }
+            isError -> {
+                ErrorView()
+            }
+        }
+    }
+}
+
+@Composable
+fun ArticleItems(
+    articles: List<Articles>,
+    modifier: Modifier = Modifier
+) {
     LazyColumn {
-        items(articles) { article ->
-            Card(
-                modifier,
-                border = BorderStroke(2.dp, color = colorResource(id = R.color.purple_500))
-            ) {
-                Row(modifier.fillMaxWidth()) {
-                    com.skydoves.landscapist.coil.CoilImage(
-                        imageModel = article.urlToImage,
-                        modifier = Modifier.size(100.dp)
-                    )
-                    Column(modifier) {
-                        Text(text = article.title ?: "Not Available", fontWeight = FontWeight.Bold)
-                        Row {
-                            Text(text = article.author ?: "Not Available")
-                            article.publishedAt?.let { publishedAt ->
-                                DateUtils.stringToDate(publishedAt)?.let {
-                                    Text(
-                                        text = it.getTimeAgo()
-                                    )
+        if (articles.isNotEmpty()) {
+            items(articles) { article ->
+                Card(
+                    modifier,
+                    border = BorderStroke(2.dp, color = colorResource(id = R.color.purple_500))
+                ) {
+                    Row(modifier.fillMaxWidth()) {
+                        com.skydoves.landscapist.coil.CoilImage(
+                            imageModel = article.urlToImage,
+                            modifier = Modifier.size(100.dp)
+                        )
+                        Column(modifier) {
+                            Text(
+                                text = article.title ?: "Not Available",
+                                fontWeight = FontWeight.Bold
+                            )
+                            Row {
+                                Text(text = article.author ?: "Not Available")
+                                article.publishedAt?.let { publishedAt ->
+                                    DateUtils.stringToDate(publishedAt)?.let {
+                                        Text(
+                                            text = it.getTimeAgo()
+                                        )
+                                    }
                                 }
                             }
                         }
