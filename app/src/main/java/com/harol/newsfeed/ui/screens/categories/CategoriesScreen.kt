@@ -11,7 +11,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import com.harol.newsfeed.R
 import com.harol.newsfeed.data.enums.allArticleCategories
 import com.harol.newsfeed.models.Articles
-import com.harol.newsfeed.ui.MainViewModel
 import com.harol.newsfeed.ui.components.LoadingView
 import com.harol.newsfeed.utils.DateUtils
 import com.harol.newsfeed.utils.DateUtils.getTimeAgo
@@ -30,11 +28,13 @@ import com.harol.newsfeed.utils.DateUtils.getTimeAgo
 @Composable
 fun CategoriesScreen(
     onFetchCategory: (String) -> Unit,
-    viewModel: MainViewModel,
-    isLoading: MutableState<Boolean>,
-    isError: MutableState<Boolean>
+    viewModel: CategoriesViewModel,
 ) {
     val tabsItems = allArticleCategories()
+
+    val isLoading = viewModel.isLoading.collectAsState()
+    val isError = viewModel.isError.collectAsState()
+
     Column {
         when {
             isLoading.value -> {
@@ -116,8 +116,6 @@ fun PagerContent(articles: List<Articles>, modifier: Modifier = Modifier) {
                                     )
                                 }
                             }
-
-
                         }
                     }
                 }

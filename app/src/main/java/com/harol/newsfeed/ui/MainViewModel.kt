@@ -48,27 +48,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    /// :::::: Articles By Category ::::::
-    ///
-    private val _getArticleByCategory = MutableStateFlow(NewsResponse())
-    val getArticleByCategory: StateFlow<NewsResponse> get() = _getArticleByCategory
 
-    fun getArticlesByCategory(category: String) {
-        _isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _getArticleByCategory.value = newsRepository.getArticlesByCategory(category)
-            _isLoading.value = false
-        }
-    }
-
-    /// :::::: Selected Category ::::::
-    ///
-    private val _selectedCategory: MutableStateFlow<ArticleCategory?> = MutableStateFlow(null)
-    val selectedCategory: StateFlow<ArticleCategory?> get() = _selectedCategory
-
-    fun onSelectedCategory(category: String) {
-        _selectedCategory.value = category.toArticleCategory()
-    }
 
     /// :::::: Search Feature::::::
     ///

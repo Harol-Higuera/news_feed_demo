@@ -20,6 +20,7 @@ import com.harol.newsfeed.models.Articles
 import com.harol.newsfeed.ui.MainViewModel
 import com.harol.newsfeed.ui.components.BottomMenuView
 import com.harol.newsfeed.ui.screens.categories.CategoriesScreen
+import com.harol.newsfeed.ui.screens.categories.CategoriesViewModel
 import com.harol.newsfeed.ui.screens.newsDetails.NewsDetailsScreen
 import com.harol.newsfeed.ui.screens.sources.SourcesScreen
 import com.harol.newsfeed.ui.screens.sources.SourcesViewModel
@@ -85,16 +86,15 @@ fun Navigation(
          * Composable: Bottom Menu - Categories
          **/
         composable(BottomMenuScreen.Categories.route) {
-            mainViewModel.getArticlesByCategory("business")
-            mainViewModel.onSelectedCategory("business")
+            val categoriesModel = viewModel<CategoriesViewModel>()
+            categoriesModel.getArticlesByCategory("business")
+            categoriesModel.onSelectedCategory("business")
             CategoriesScreen(
-                viewModel = mainViewModel,
+                viewModel = categoriesModel,
                 onFetchCategory = {
-                    mainViewModel.onSelectedCategory(it)
-                    mainViewModel.getArticlesByCategory(it)
+                    categoriesModel.onSelectedCategory(it)
+                    categoriesModel.getArticlesByCategory(it)
                 },
-                isLoading = isLoading,
-                isError = isError
             )
         }
 
