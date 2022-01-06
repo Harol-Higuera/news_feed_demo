@@ -1,5 +1,5 @@
-## Android demo App using the Jetpack Compose and MVVM architecture. As for Dec 2021.
-
+### Android demo App using the Jetpack Compose and MVVM architecture. As for Dec 2021.
+--------
 ### This App contains
 - To be edited...
 
