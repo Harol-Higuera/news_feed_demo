@@ -1,14 +1,16 @@
 package com.harol.newsfeed.data
 
-class NewsRepository(private val newsManager: NewsManager) {
+import com.harol.newsfeed.network.NewsApiManager
 
-    suspend fun getTopNews() = newsManager.getTopNews("us")
+class NewsRepository(private val newsApiManager: NewsApiManager) {
+
+    suspend fun getTopNews() = newsApiManager.getTopNews("us")
 
     suspend fun getNewsByCategory(category: String) =
-        newsManager.getNewsByCategory(category)
+        newsApiManager.getNewsByCategory(category)
 
-    suspend fun getNewsBySource(source: String) = newsManager.getNewsBySource(source)
+    suspend fun getNewsBySource(source: String) = newsApiManager.getNewsBySource(source)
 
-    suspend fun getNewsByKeyword(query: String) = newsManager.getNewsByKeyword(query)
+    suspend fun getNewsByKeyword(query: String) = newsApiManager.getNewsByKeyword(query)
 
 }
