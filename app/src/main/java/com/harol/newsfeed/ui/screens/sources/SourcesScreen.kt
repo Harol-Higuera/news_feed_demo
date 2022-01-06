@@ -29,10 +29,6 @@ import com.harol.newsfeed.ui.components.ErrorView
 import com.harol.newsfeed.ui.components.LoadingView
 
 
-/**
- * Todo 1: we create a newsManager variable, create a list for the drop down items
- * Then add a scaffold.
- * */
 @Composable
 fun SourcesScreen(
     viewModel: SourcesViewModel
@@ -46,13 +42,14 @@ fun SourcesScreen(
         "TheVerge" to "the-verge"
     )
     Scaffold(topBar = {
-        //Todo 3: Pass in TopAppBar, set the title to the source name and add drop down as an actions
         TopAppBar(
             title = {
                 Text(text = "${viewModel.sourceName.collectAsState().value} Source")
             },
             actions = {
-                //Todo 4: we create a remember variable to control the show and dismiss of the drop down
+                /**
+                 * Remember variable to control the show and dismiss of the drop down
+                 * */
                 var menuExpanded by remember { mutableStateOf(false) }
 
                 IconButton(onClick = { menuExpanded = true }) {
@@ -97,14 +94,13 @@ fun SourcesScreen(
     }
 }
 
-//Todo 8: Create a composable to display the articles
 @Composable
 fun SourceContent(articles: List<Articles>) {
-    //Todo 10: create a Uri Handler
+
     val uriHandler = LocalUriHandler.current
     LazyColumn {
         items(articles) { article ->
-            //Todo 9 create an annotated string for the articles full URL
+
             val annotatedString = buildAnnotatedString {
                 pushStringAnnotation(
                     tag = "URL",
@@ -142,14 +138,14 @@ fun SourceContent(articles: List<Articles>) {
                         maxLines = 3,
                         overflow = TextOverflow.Ellipsis
                     )
-                    /**Todo 11 we use a card to set hyperlink for the url to the full article
-                     * We use a ClickbaleText instead of Text so we can set an action for when its clicked
-                     * Pass in the annotated string as text and get its result as a url then open with the uri handler
-                     */
+
                     Card(
                         backgroundColor = colorResource(id = R.color.white),
                         elevation = 6.dp,
                     ) {
+                        /**
+                         * Let's use ClickableText as this text needs to be clickable.
+                         * */
                         ClickableText(text = annotatedString,
                             modifier = Modifier.padding(8.dp),
                             onClick = {
@@ -167,7 +163,6 @@ fun SourceContent(articles: List<Articles>) {
     }
 }
 
-//Todo 12: create preview for source content
 @Preview(showBackground = true)
 @Composable
 fun SourceContentPreview() {

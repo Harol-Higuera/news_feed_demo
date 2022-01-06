@@ -26,9 +26,14 @@ fun SearchView(
     onExecuteSearch: (String) -> Unit,
 ) {
     val localFocusManager = LocalFocusManager.current
+
+    /**
+     * Remember variable to hold the text entered in this composable.
+     * */
     var text by remember {
         mutableStateOf("")
     }
+
     Card(
         elevation = 6.dp,
         shape = RoundedCornerShape(4.dp),
