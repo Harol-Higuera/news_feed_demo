@@ -22,7 +22,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val _isError = MutableStateFlow(false)
     private val _newsResponse = MutableStateFlow(NewsResponse())
     private val _query = MutableStateFlow("")
-    private val _searchNewsResponse = MutableStateFlow(NewsResponse())
 
     /// Getters
     ///
@@ -31,7 +30,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val isError: StateFlow<Boolean> get() = _isError
     val newsResponse: StateFlow<NewsResponse> get() = _newsResponse
     val query: StateFlow<String> get() = _query
-    val searchNewsResponse: StateFlow<NewsResponse> get() = _searchNewsResponse
 
     /// Error Handler
     ///
@@ -46,7 +44,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     ///
 
 
-    fun getTopArticles() {
+    fun getTopNews() {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
             _newsResponse.value = newsRepository.getTopNews()
@@ -55,10 +53,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    fun getSearchArticles(query: String) {
+    fun getNewsByKeyword(query: String) {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _searchNewsResponse.value = newsRepository.getNewsByKeyword(query)
+            _newsResponse.value = newsRepository.getNewsByKeyword(query)
             _isLoading.value = false
         }
     }

@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getTopArticles()
+        viewModel.getTopNews()
         setContent {
             NewsAppTheme {
                 Surface(color = MaterialTheme.colors.background) {

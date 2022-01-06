@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.harol.newsfeed.R
 import com.harol.newsfeed.models.Articles
-import com.harol.newsfeed.ui.screens.main.MainViewModel
 import com.harol.newsfeed.ui.components.ErrorView
 import com.harol.newsfeed.ui.components.LoadingView
 import com.harol.newsfeed.ui.components.SearchView
+import com.harol.newsfeed.ui.screens.main.MainViewModel
 import com.harol.newsfeed.utils.DateUtils
 import com.harol.newsfeed.utils.DateUtils.getTimeAgo
 import com.skydoves.landscapist.coil.CoilImage
@@ -30,23 +29,22 @@ import com.skydoves.landscapist.coil.CoilImage
 @Composable
 fun TopNewsScreen(
     navController: NavController,
-    articles: List<Articles>,
-    query: MutableState<String>,
     viewModel: MainViewModel,
-    isLoading: MutableState<Boolean>,
-    isError: MutableState<Boolean>
 ) {
-    val searchedText = query.value
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-        SearchView(query, viewModel)
-        val resultList = mutableListOf<Articles>()
-        if (searchedText != "") {
-            resultList.addAll(
-                viewModel.searchNewsResponse.collectAsState().value.articles ?: listOf(Articles())
-            )
-        } else {
-            resultList.addAll(articles)
-        }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        SearchView(onExecuteSearch = { queryString ->
+            viewModel.getNewsByKeyword(queryString)
+        })
+
+        val resultList =
+            viewModel.newsResponse.collectAsState().value.articles ?: mutableListOf()
+        val isLoading = viewModel.isLoading.collectAsState()
+        val isError = viewModel.isError.collectAsState()
 
         when {
             isLoading.value -> {
@@ -71,7 +69,7 @@ fun TopNewsScreen(
 @Composable
 fun TopNewsItem(
     articles: Articles,
-    onNewsClick: () -> Unit = {}
+    onNewsClick: () -> Unit
 ) {
     Box(modifier = Modifier
         .height(200.dp)
@@ -112,15 +110,16 @@ fun TopNewsItem(
 }
 
 
-@Preview(showBackground = true)
+@Preview()
 @Composable
 fun TopNewsPreview() {
     TopNewsItem(
-        Articles(
+        articles = Articles(
             author = "Namita Singh",
             title = "Cleo Smith news — live: Kidnap suspect 'in hospital again' as 'hard police grind' credited for breakthrough - The Independent",
             description = "The suspected kidnapper of four-year-old Cleo Smith has been treated in hospital for a second time amid reports he was “attacked” while in custody.",
             publishedAt = "2021-11-04T04:42:40Z"
-        )
+        ),
+        onNewsClick = {}
     )
 }

@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -16,7 +14,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.harol.newsfeed.data.sealed.BottomMenuScreen
-import com.harol.newsfeed.models.Articles
 import com.harol.newsfeed.ui.components.BottomMenuView
 import com.harol.newsfeed.ui.screens.categories.CategoriesScreen
 import com.harol.newsfeed.ui.screens.categories.CategoriesViewModel
@@ -51,33 +48,20 @@ fun Navigation(
     paddingValues: PaddingValues,
     mainViewModel: MainViewModel
 ) {
-    val loading by mainViewModel.isLoading.collectAsState()
-    val error by mainViewModel.isError.collectAsState()
-    val articles = mutableListOf<Articles>()
-    val topArticles = mainViewModel.newsResponse.collectAsState().value.articles
-    articles.addAll(topArticles ?: listOf())
+
 
     NavHost(
         navController = navController,
         startDestination = BottomMenuScreen.TopNews.route,
         modifier = Modifier.padding(paddingValues)
     ) {
-
-        val queryState = mutableStateOf(mainViewModel.query.value)
-        val isLoading = mutableStateOf(loading)
-        val isError = mutableStateOf(error)
-
         /**
          * Composable: Bottom Menu - Top News
          **/
         composable(BottomMenuScreen.TopNews.route) {
             TopNewsScreen(
                 navController = navController,
-                articles = articles,
-                query = queryState,
                 viewModel = mainViewModel,
-                isLoading = isLoading,
-                isError = isError
             )
         }
 
@@ -111,16 +95,13 @@ fun Navigation(
                 navArgument("index") { type = NavType.IntType }
             )) { navBackStackEntry ->
             val index = navBackStackEntry.arguments?.getInt("index")
-            index?.let {
-                if (queryState.value != "") {
-                    articles.clear()
-                    articles.addAll(mainViewModel.searchNewsResponse.value.articles ?: listOf())
-                } else {
-                    articles.clear()
-                    articles.addAll(mainViewModel.newsResponse.value.articles ?: listOf())
+            index?.let { nonNullIndex ->
+                val currentNews = mainViewModel.newsResponse.collectAsState().value
+                currentNews.articles?.let { articles ->
+                    if (articles.isNotEmpty()) {
+                        NewsDetailsScreen(articles[nonNullIndex], scrollState, navController)
+                    }
                 }
-                val article = articles[index]
-                NewsDetailsScreen(article, scrollState, navController)
             }
         }
     }
