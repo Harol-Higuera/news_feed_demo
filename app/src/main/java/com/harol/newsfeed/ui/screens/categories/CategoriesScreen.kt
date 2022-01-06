@@ -28,7 +28,6 @@ import com.harol.newsfeed.utils.DateUtils.getTimeAgo
 
 @Composable
 fun CategoriesScreen(
-    onFetchCategory: (ArticleCategory) -> Unit,
     viewModel: CategoriesViewModel,
 ) {
     val tabsItems = allArticleCategories()
@@ -50,8 +49,10 @@ fun CategoriesScreen(
                         val category = tabsItems[it]
                         CategoryTab(
                             category = category,
-                            onFetchCategory = onFetchCategory,
-                            isSelected = viewModel.selectedCategory.collectAsState().value == category
+                            onFetchCategory = { selectedCategory ->
+                                viewModel.getNewsByCategory(selectedCategory)
+                            },
+                            isSelected = viewModel.selectedCategory.collectAsState().value == category,
                         )
                     }
                 }
@@ -59,7 +60,7 @@ fun CategoriesScreen(
         }
 
         PagerContent(
-            articles = viewModel.getArticleByCategory.collectAsState().value.articles ?: listOf(
+            articles = viewModel.newsResponse.collectAsState().value.articles ?: listOf(
                 Articles()
             ), modifier = Modifier.padding(8.dp)
         )

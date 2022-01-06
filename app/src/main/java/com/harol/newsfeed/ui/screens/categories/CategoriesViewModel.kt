@@ -20,15 +20,16 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
 
     private val _isLoading = MutableStateFlow(false)
     private val _isError = MutableStateFlow(false)
-    private val _getArticleByCategory = MutableStateFlow(NewsResponse())
-    private val _selectedCategory: MutableStateFlow<ArticleCategory?> = MutableStateFlow(null)
+    private val _newsResponse = MutableStateFlow(NewsResponse())
+    private val _selectedCategory: MutableStateFlow<ArticleCategory> =
+        MutableStateFlow(ArticleCategory.BUSINESS)
 
     /// Getters
     ///
 
     val isLoading: StateFlow<Boolean> get() = _isLoading
     val isError: StateFlow<Boolean> get() = _isError
-    val getArticleByCategory: StateFlow<NewsResponse> get() = _getArticleByCategory
+    val newsResponse: StateFlow<NewsResponse> get() = _newsResponse
     val selectedCategory: StateFlow<ArticleCategory?> get() = _selectedCategory
 
     /// Error Handler
@@ -43,16 +44,15 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
     /// Public Functions
     ///
 
-    fun getArticlesByCategory(category: ArticleCategory) {
+    fun getNewsByCategory(
+        category: ArticleCategory = _selectedCategory.value
+    ) {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _getArticleByCategory.value =
+            _newsResponse.value =
                 newsRepository.getArticlesByCategory(category.categoryName)
             _isLoading.value = false
+            _selectedCategory.value = category
         }
-    }
-
-    fun onSelectedCategory(category: ArticleCategory) {
-        _selectedCategory.value = category
     }
 }

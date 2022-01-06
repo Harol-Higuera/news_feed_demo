@@ -15,7 +15,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.harol.newsfeed.data.enums.ArticleCategory
 import com.harol.newsfeed.data.sealed.BottomMenuScreen
 import com.harol.newsfeed.models.Articles
 import com.harol.newsfeed.ui.MainViewModel
@@ -88,14 +87,9 @@ fun Navigation(
          **/
         composable(BottomMenuScreen.Categories.route) {
             val categoriesModel = viewModel<CategoriesViewModel>()
-            categoriesModel.getArticlesByCategory(ArticleCategory.BUSINESS)
-            categoriesModel.onSelectedCategory(ArticleCategory.BUSINESS)
+            categoriesModel.getNewsByCategory()
             CategoriesScreen(
                 viewModel = categoriesModel,
-                onFetchCategory = {
-                    categoriesModel.onSelectedCategory(it)
-                    categoriesModel.getArticlesByCategory(it)
-                },
             )
         }
 
