@@ -95,7 +95,9 @@ fun SourcesScreen(
 }
 
 @Composable
-fun SourceContent(articles: List<Articles>) {
+fun SourceContent(
+    articles: List<Articles>
+) {
 
     val uriHandler = LocalUriHandler.current
     LazyColumn {
