@@ -20,7 +20,7 @@ class SourcesViewModel(application: Application) : AndroidViewModel(application)
     private val _isLoading = MutableStateFlow(false)
     private val _isError = MutableStateFlow(false)
     private val _sourceName = MutableStateFlow("engadget")
-    private val _getArticleBySource = MutableStateFlow(NewsResponse())
+    private val _newsResponse = MutableStateFlow(NewsResponse())
 
     /// Getters
     ///
@@ -28,7 +28,7 @@ class SourcesViewModel(application: Application) : AndroidViewModel(application)
     val isLoading: StateFlow<Boolean> get() = _isLoading
     val isError: StateFlow<Boolean> get() = _isError
     val sourceName: StateFlow<String> get() = _sourceName
-    val getArticleBySource: StateFlow<NewsResponse> get() = _getArticleBySource
+    val newsResponse: StateFlow<NewsResponse> get() = _newsResponse
 
 
     /// Error Handler
@@ -43,13 +43,13 @@ class SourcesViewModel(application: Application) : AndroidViewModel(application)
     /// Public Functions
     ///
 
-    fun getArticlesBySource(
+    fun getNewsBySource(
         newSourceName: String = _sourceName.value
     ) {
         _sourceName.value = newSourceName
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _getArticleBySource.value = newsRepository.getArticlesBySource(_sourceName.value)
+            _newsResponse.value = newsRepository.getNewsBySource(_sourceName.value)
             _isLoading.value = false
         }
     }

@@ -50,7 +50,7 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
             _newsResponse.value =
-                newsRepository.getArticlesByCategory(category.categoryName)
+                newsRepository.getNewsByCategory(category.categoryName)
             _isLoading.value = false
             _selectedCategory.value = category
         }

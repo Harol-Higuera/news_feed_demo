@@ -67,7 +67,7 @@ fun SourcesScreen(
                     ) {
                         items.forEach {
                             DropdownMenuItem(onClick = {
-                                viewModel.getArticlesBySource(it.second)
+                                viewModel.getNewsBySource(it.second)
                                 menuExpanded = false
                             }) {
                                 Text(it.first)
@@ -90,7 +90,7 @@ fun SourcesScreen(
                 ErrorView()
             }
             else -> {
-                val article = viewModel.getArticleBySource.collectAsState().value
+                val article = viewModel.newsResponse.collectAsState().value
                 SourceContent(articles = article.articles ?: listOf())
             }
         }

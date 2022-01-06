@@ -98,7 +98,7 @@ fun Navigation(
          **/
         composable(BottomMenuScreen.Sources.route) {
             val sourcesViewModel = viewModel<SourcesViewModel>()
-            sourcesViewModel.getArticlesBySource()
+            sourcesViewModel.getNewsBySource()
             SourcesScreen(
                 viewModel = sourcesViewModel,
             )

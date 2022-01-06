@@ -4,8 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.harol.newsfeed.NewsFeedApp
-import com.harol.newsfeed.data.enums.ArticleCategory
-import com.harol.newsfeed.data.enums.toArticleCategory
 import com.harol.newsfeed.models.NewsResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +41,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         // Note: We can safely run the Coroutine repository.getArticles() in a
         // viewModelScope launch
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _newsResponse.value = newsRepository.getArticles()
+            _newsResponse.value = newsRepository.getTopNews()
             _isLoading.value = false
         }
     }
@@ -59,7 +57,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun getSearchArticles(query: String) {
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _searchNewsResponse.value = newsRepository.getSearchArticles(query)
+            _searchNewsResponse.value = newsRepository.getNewsByKeyword(query)
             _isLoading.value = false
         }
     }

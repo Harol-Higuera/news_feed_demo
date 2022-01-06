@@ -8,33 +8,32 @@ import kotlinx.coroutines.withContext
 
 class NewsManager(private val newsApiService: NewsApiService) {
 
-
-    suspend fun getArticles(country: String): NewsResponse = withContext(Dispatchers.IO) {
-        newsApiService.getTopArticles(
+    suspend fun getTopNews(country: String): NewsResponse = withContext(Dispatchers.IO) {
+        newsApiService.getTopNews(
             country,
             "715861e4b4874400a164e9d7bca63c0c"
         )
     }
 
-    suspend fun getArticlesBySource(source: String): NewsResponse =
+    suspend fun getNewsBySource(source: String): NewsResponse =
         withContext(Dispatchers.IO) {
-            newsApiService.searchArticlesBySource(
+            newsApiService.getNewsBySource(
                 source = source,
                 "715861e4b4874400a164e9d7bca63c0c"
             )
         }
 
-    suspend fun getSearchedArticles(query: String): NewsResponse =
+    suspend fun getNewsByKeyword(query: String): NewsResponse =
         withContext(Dispatchers.IO) {
-            newsApiService.searchArticles(
+            newsApiService.getNewsByKeyword(
                 query,
                 "715861e4b4874400a164e9d7bca63c0c"
             )
         }
 
-    suspend fun getArticlesByCategory(category: String): NewsResponse =
+    suspend fun getNewsByCategory(category: String): NewsResponse =
         withContext(Dispatchers.IO) {
-            newsApiService.getCategories(
+            newsApiService.getNewsByCategory(
                 category,
                 "715861e4b4874400a164e9d7bca63c0c"
             )

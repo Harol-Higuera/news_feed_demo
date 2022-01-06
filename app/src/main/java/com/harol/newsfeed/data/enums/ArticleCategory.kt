@@ -24,8 +24,3 @@ fun allArticleCategories(): List<ArticleCategory> {
         TECHNOLOGY
     )
 }
-
-fun String.toArticleCategory(): ArticleCategory? {
-    val map = ArticleCategory.values().associateBy(ArticleCategory::categoryName)
-    return map[this]
-}
