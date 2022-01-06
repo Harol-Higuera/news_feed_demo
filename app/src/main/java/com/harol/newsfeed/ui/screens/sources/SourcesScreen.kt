@@ -67,8 +67,7 @@ fun SourcesScreen(
                     ) {
                         items.forEach {
                             DropdownMenuItem(onClick = {
-                                viewModel.sourceName.value = it.second
-                                viewModel.getArticlesBySource()
+                                viewModel.getArticlesBySource(it.second)
                                 menuExpanded = false
                             }) {
                                 Text(it.first)
