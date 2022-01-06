@@ -35,7 +35,9 @@ fun NewsDetailsScreen(
     navController: NavController
 ) {
     Scaffold(topBar = {
-        DetailTopAppBar(onBackPressed = { navController.popBackStack() })
+        DetailTopAppBar(onBackPressed = {
+            navController.popBackStack()
+        })
     }) {
         Column(
             modifier = Modifier
@@ -76,17 +78,24 @@ fun NewsDetailsScreen(
 }
 
 @Composable
-fun DetailTopAppBar(onBackPressed: () -> Unit = {}) {
+fun DetailTopAppBar(
+    onBackPressed: () -> Unit = {}
+) {
     TopAppBar(title = { Text(text = "Detail Screen", fontWeight = FontWeight.SemiBold) },
         navigationIcon = {
-            IconButton(onClick = { onBackPressed() }) {
+            IconButton(onClick = {
+                onBackPressed()
+            }) {
                 Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Arrow Back")
             }
         })
 }
 
 @Composable
-fun InfoWithIcon(icon: ImageVector, info: String) {
+fun InfoWithIcon(
+    icon: ImageVector,
+    info: String
+) {
     Row {
         Icon(
             icon,
