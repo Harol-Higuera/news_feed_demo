@@ -44,7 +44,7 @@ object NewsApiClient {
 
 
     private val client = OkHttpClient.Builder()
-        .addInterceptor(loggerInterceptor)
+        .addInterceptor(CustomLoggingInterceptor())
         .addInterceptor(authInterceptor)
         .build()
 
