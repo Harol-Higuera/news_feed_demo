@@ -44,8 +44,8 @@ object NewsApiClient {
 
 
     private val client = OkHttpClient.Builder()
-        .addInterceptor(CustomLoggingInterceptor())
         .addInterceptor(authInterceptor)
+        .addInterceptor(CustomLoggingInterceptor())
         .build()
 
     private val retrofit = Retrofit.Builder()
