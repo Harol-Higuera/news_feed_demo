@@ -1,5 +1,9 @@
 package com.harol.newsfeed.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -14,46 +18,58 @@ import com.harol.newsfeed.R
 import com.harol.newsfeed.data.sealed.BottomMenuScreen
 
 
+@ExperimentalAnimationApi
 @Composable
-fun BottomMenuView(navController: NavController) {
+fun BottomMenuView(
+    navController: NavController,
+    showBottomNavBar: Boolean
+) {
     val menuItems = listOf(
         BottomMenuScreen.TopNews,
         BottomMenuScreen.Categories,
-        BottomMenuScreen.Sources
+        BottomMenuScreen.Sources,
     )
-    BottomNavigation(
-        contentColor = colorResource(id = R.color.white)
-    ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
+    AnimatedVisibility(
+        visible = showBottomNavBar,
+        enter = slideInVertically(initialOffsetY = { it }),
+        exit = slideOutVertically(targetOffsetY = { it }),
+        content = {
+            BottomNavigation(
+                contentColor = colorResource(id = R.color.white)
+            ) {
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
 
-        menuItems.forEach {
-            BottomNavigationItem(
-                label = {
-                    Text(text = it.title)
-                },
-                alwaysShowLabel = true,
-                selectedContentColor = Color.White,
-                unselectedContentColor = Color.Gray,
-                selected = currentRoute == it.route,
-                onClick = {
-                    navController.navigate(it.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route) {
-                                saveState = true
+                menuItems.forEach {
+                    BottomNavigationItem(
+                        label = {
+                            Text(text = it.title)
+                        },
+                        alwaysShowLabel = true,
+                        selectedContentColor = Color.White,
+                        unselectedContentColor = Color.Gray,
+                        selected = currentRoute == it.route,
+                        onClick = {
+                            navController.navigate(it.route) {
+                                navController.graph.startDestinationRoute?.let { route ->
+                                    popUpTo(route) {
+                                        saveState = true
+                                    }
+                                }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
-                icon = {
-                    Icon(
-                        imageVector = it.icon,
-                        contentDescription = it.title
+                        },
+                        icon = {
+                            Icon(
+                                imageVector = it.icon,
+                                contentDescription = it.title
+                            )
+                        },
                     )
-                },
-            )
-        }
-    }
+                }
+            }
+        })
+
+
 }

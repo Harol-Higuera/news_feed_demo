@@ -21,7 +21,6 @@ class TopNewsViewModel(application: Application) : AndroidViewModel(application)
     private val _isLoading = MutableStateFlow(false)
     private val _isError = MutableStateFlow(false)
     private val _newsResponse = MutableStateFlow(NewsResponse())
-    private val _query = MutableStateFlow("")
 
     /// Getters
     ///
@@ -29,7 +28,6 @@ class TopNewsViewModel(application: Application) : AndroidViewModel(application)
     val isLoading: StateFlow<Boolean> get() = _isLoading
     val isError: StateFlow<Boolean> get() = _isError
     val newsResponse: StateFlow<NewsResponse> get() = _newsResponse
-    val query: StateFlow<String> get() = _query
 
     /// Error Handler
     ///
@@ -45,6 +43,9 @@ class TopNewsViewModel(application: Application) : AndroidViewModel(application)
 
 
     fun getTopNews() {
+        if (newsResponse.value.articles != null) {
+            return
+        }
         _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO + errorHandler) {
             _newsResponse.value = newsRepository.getTopNews()
