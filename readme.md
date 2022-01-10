@@ -10,5 +10,5 @@
 4. Make this app Unit testable
 5. Define the routes in a file or something. Also including parameters.
 6. Split the composables inside a NavGraphBuilder. In real apps this could have too many composables and it would look messy. Perhaps in extensions of NavGraphBuilder.
-7. When open Detail Screen, I want to make it a modal view that cover the entire screen.
+7. ~~When open Detail Screen, I want to make it a modal view that cover the entire screen.~~
 8. Organize the Themes in a better way. Add some more functionalities to make the theme settings more obvious.
