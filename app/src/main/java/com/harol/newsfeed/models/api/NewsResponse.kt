@@ -1,4 +1,4 @@
-package com.harol.newsfeed.models
+package com.harol.newsfeed.models.api
 
 data class NewsResponse(
     val status: String? = null,

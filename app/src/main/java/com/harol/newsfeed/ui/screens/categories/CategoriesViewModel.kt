@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.harol.newsfeed.NewsFeedApp
 import com.harol.newsfeed.data.enums.ArticleCategory
-import com.harol.newsfeed.models.NewsResponse
+import com.harol.newsfeed.models.api.NewsResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

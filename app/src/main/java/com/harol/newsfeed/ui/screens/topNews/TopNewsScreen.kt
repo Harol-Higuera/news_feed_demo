@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.harol.newsfeed.R
-import com.harol.newsfeed.models.Articles
+import com.harol.newsfeed.models.api.Articles
 import com.harol.newsfeed.ui.components.ErrorView
 import com.harol.newsfeed.ui.components.LoadingView
 import com.harol.newsfeed.ui.components.SearchView

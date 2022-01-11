@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.harol.newsfeed.R
 import com.harol.newsfeed.data.enums.ArticleCategory
 import com.harol.newsfeed.data.enums.allArticleCategories
-import com.harol.newsfeed.models.Articles
+import com.harol.newsfeed.models.api.Articles
 import com.harol.newsfeed.ui.components.ErrorView
 import com.harol.newsfeed.ui.components.LoadingView
 import com.harol.newsfeed.utils.DateUtils

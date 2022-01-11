@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.harol.newsfeed.R
-import com.harol.newsfeed.models.Articles
+import com.harol.newsfeed.models.api.Articles
 import com.harol.newsfeed.utils.DateUtils
 import com.harol.newsfeed.utils.DateUtils.getTimeAgo
 import com.skydoves.landscapist.coil.CoilImage

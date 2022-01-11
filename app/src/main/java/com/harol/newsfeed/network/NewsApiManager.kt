@@ -1,6 +1,6 @@
 package com.harol.newsfeed.network
 
-import com.harol.newsfeed.models.NewsResponse
+import com.harol.newsfeed.models.api.NewsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
