@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.harol.newsfeed.NewsFeedApp
+import com.harol.newsfeed.data.sealed.ApiResult
 import com.harol.newsfeed.models.api.NewsResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
@@ -47,8 +48,17 @@ class TopNewsViewModel(application: Application) : AndroidViewModel(application)
             return
         }
         _isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _newsResponse.value = newsRepository.getTopNews()
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = newsRepository.getTopNews()) {
+                is ApiResult.Success -> {
+                    result.data?.let { data ->
+                        _newsResponse.value = data
+                    }
+                }
+                is ApiResult.Error -> {
+                    // TODO(Anyone): Do something with this Error
+                }
+            }
             _isLoading.value = false
         }
     }
@@ -56,8 +66,17 @@ class TopNewsViewModel(application: Application) : AndroidViewModel(application)
 
     fun getNewsByKeyword(query: String) {
         _isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO + errorHandler) {
-            _newsResponse.value = newsRepository.getNewsByKeyword(query)
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = newsRepository.getNewsByKeyword(query)) {
+                is ApiResult.Success -> {
+                    result.data?.let { data ->
+                        _newsResponse.value = data
+                    }
+                }
+                is ApiResult.Error -> {
+                    // TODO(Anyone): Do something with this Error
+                }
+            }
             _isLoading.value = false
         }
     }
