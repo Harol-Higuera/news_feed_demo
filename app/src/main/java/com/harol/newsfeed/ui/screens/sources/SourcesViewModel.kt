@@ -7,7 +7,6 @@ import com.harol.newsfeed.NewsFeedApp
 import com.harol.newsfeed.data.sealed.ApiResult
 import com.harol.newsfeed.models.api.NewsResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -49,7 +48,7 @@ class SourcesViewModel(application: Application) : AndroidViewModel(application)
     ) {
         _sourceName.value = newSourceName
         _isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             when (val result = newsRepository.getNewsBySource(_sourceName.value)) {
                 is ApiResult.Success -> {
                     result.data?.let { data ->

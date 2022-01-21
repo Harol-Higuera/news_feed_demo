@@ -7,7 +7,6 @@ import com.harol.newsfeed.NewsFeedApp
 import com.harol.newsfeed.data.sealed.ApiResult
 import com.harol.newsfeed.models.api.NewsResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -48,7 +47,7 @@ class TopNewsViewModel(application: Application) : AndroidViewModel(application)
             return
         }
         _isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             when (val result = newsRepository.getTopNews()) {
                 is ApiResult.Success -> {
                     result.data?.let { data ->
@@ -66,7 +65,7 @@ class TopNewsViewModel(application: Application) : AndroidViewModel(application)
 
     fun getNewsByKeyword(query: String) {
         _isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             when (val result = newsRepository.getNewsByKeyword(query)) {
                 is ApiResult.Success -> {
                     result.data?.let { data ->

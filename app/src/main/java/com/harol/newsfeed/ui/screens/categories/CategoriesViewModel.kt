@@ -8,7 +8,6 @@ import com.harol.newsfeed.data.enums.ArticleCategory
 import com.harol.newsfeed.data.sealed.ApiResult
 import com.harol.newsfeed.models.api.NewsResponse
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -48,7 +47,7 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
         category: ArticleCategory = _selectedCategory.value
     ) {
         _isLoading.value = true
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             when (val result = newsRepository.getNewsByCategory(category.categoryName)) {
                 is ApiResult.Success -> {
                     result.data?.let { data ->
