@@ -1,39 +1,54 @@
-package com.harol.newsfeed.network
+package com.therapeutic.app.data.network
 
 import android.util.Log
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonElement
+import com.google.gson.JsonParser
 import okhttp3.Interceptor
+import okhttp3.RequestBody
 import okhttp3.Response
 import okio.Buffer
 import okio.GzipSource
-import org.json.JSONObject
+import java.io.IOException
 import java.nio.charset.Charset
 import java.nio.charset.StandardCharsets
+
 
 class CustomLoggingInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val request = chain.request()
 
-        Log.d("Harol", "::::::::::::::: S T A R T :::::::::::::")
-
-        Log.d("Harol", "⬆️ 🔥🔥🔥🔥 Request Path:\n${request.url}")
-        Log.d("Harol", "⬆️ 🔥🔥🔥🔥 Request Method:\n${request.method}")
-
-        val headers = request.headers
-        if (headers.size > 0) {
-            Log.d("Harol", "⬆️ 🔥🔥🔥🔥 Request Headers:\n$headers")
-        }
 
         val response: Response
 
         try {
             response = chain.proceed(request)
         } catch (e: Exception) {
-            Log.e("Harol", " HTTP FAILED: $e")
+            Log.e("ApiLogger", " HTTP FAILED: $e")
             throw e
         }
 
-        Log.d("Harol", "⬇️ 🔥🔥🔥🔥 Response Code:\n${response.code}")
+        Log.d("ApiLogger", "::::::::::::::: S T A R T :::::::::::::")
+
+        Log.d("ApiLogger", "⬆️ 🔥🔥🔥🔥 Request Path:\n${request.url}")
+        Log.d("ApiLogger", "⬆️ 🔥🔥🔥🔥 Request Method:\n${request.method}")
+
+        val headers = request.headers
+        if (headers.size > 0) {
+            Log.d("ApiLogger", "⬆️ 🔥🔥🔥🔥 Request Headers:\n$headers")
+        }
+
+        request.body?.let { body ->
+            Log.d(
+                "ApiLogger",
+                "⬆️ 🔥🔥🔥🔥 Request Body:\n${getPrettyJson(bodyToString(body) ?: "")}"
+            )
+        }
+
+        Log.d("ApiLogger", "⬆️ 🔥🔥🔥🔥 Request Path:\n${request.body}")
+
+        Log.d("ApiLogger", "✅ 🔥🔥🔥🔥 Response Code:\n${response.code}")
 
         response.body?.let { responseBody ->
 
@@ -52,21 +67,37 @@ class CustomLoggingInterceptor : Interceptor {
             val charset: Charset =
                 contentType?.charset(StandardCharsets.UTF_8) ?: StandardCharsets.UTF_8
 
-            try {
-                val json = JSONObject(buffer.clone().readString(charset)).toString(2)
+            val string = buffer.clone().readString(charset)
 
-                Log.d("Harol", "⬇️ 🔥🔥🔥🔥 Response Body:\n$json")
+            try {
+                Log.d("ApiLogger", "✅ 🔥🔥🔥🔥 Response Body:\n${getPrettyJson(string)}")
 
             } catch (e: Exception) {
-                Log.e("Harol", "Cannot print BODY: $e")
-                throw e
+                e.message?.let { message ->
+                    Log.e("ApiLogger", "E1. Cannot print BODY: $message")
+                }
             }
-
         }
-
-        Log.d("Harol", "::::::::::::::: E N D :::::::::::::")
-
+        Log.d("ApiLogger", "::::::::::::::: E N D :::::::::::::")
         return response
     }
 
+
+    private fun getPrettyJson(string: String): String {
+        val jsonParser = JsonParser()
+        val gson = GsonBuilder().setPrettyPrinting().serializeNulls().disableHtmlEscaping()
+            .create()
+        val je: JsonElement = jsonParser.parse(string)
+        return gson.toJson(je)
+    }
+
+    private fun bodyToString(request: RequestBody): String? {
+        return try {
+            val buffer = Buffer()
+            request.writeTo(buffer)
+            buffer.readUtf8()
+        } catch (e: IOException) {
+            "Did not work"
+        }
+    }
 }
