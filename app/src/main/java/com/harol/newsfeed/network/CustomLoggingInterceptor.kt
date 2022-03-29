@@ -1,4 +1,4 @@
-package com.therapeutic.app.data.network
+package com.harol.newsfeed.network
 
 import android.util.Log
 import com.google.gson.GsonBuilder
@@ -18,7 +18,6 @@ class CustomLoggingInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val request = chain.request()
-
 
         val response: Response
 
@@ -45,8 +44,6 @@ class CustomLoggingInterceptor : Interceptor {
                 "⬆️ 🔥🔥🔥🔥 Request Body:\n${getPrettyJson(bodyToString(body) ?: "")}"
             )
         }
-
-        Log.d("ApiLogger", "⬆️ 🔥🔥🔥🔥 Request Path:\n${request.body}")
 
         Log.d("ApiLogger", "✅ 🔥🔥🔥🔥 Response Code:\n${response.code}")
 
